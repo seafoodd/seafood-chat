@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    color-scheme: dark;
+}
+
+* {
+    scroll-behavior: smooth
+}
+
+@layer base {
+    body {
+        @apply bg-black text-base;
+    }
+}
