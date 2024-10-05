@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const NavItem = ({ logo, text, href }) => {
   return (
@@ -16,5 +17,11 @@ const NavItem = ({ logo, text, href }) => {
     </NavLink>
   );
 };
+
+NavItem.propTypes = {
+  logo: PropTypes.node,
+  text: PropTypes.string,
+  href: PropTypes.string.isRequired,
+}
 
 export default NavItem;

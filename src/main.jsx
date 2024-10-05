@@ -9,20 +9,25 @@ import Messages from "./pages/Messages.jsx";
 import Communities from "./pages/Communities.jsx";
 import Profile from "./pages/Profile.jsx";
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "",
+      element: <App />,
+      children: [
+        { path: "", element: <Feed /> },
+        { path: "/feed", element: <Feed /> },
+        { path: "/explore", element: <Explore /> },
+        { path: "/messages", element: <Messages /> },
+        { path: "/communities", element: <Communities /> },
+        { path: "/profile", element: <Profile /> },
+      ],
+    },
+  ],
   {
-    path: "",
-    element: <App />,
-    children: [
-      { path: "", element: <Feed /> },
-      { path: "/feed", element: <Feed /> },
-      { path: "/explore", element: <Explore /> },
-      { path: "/messages", element: <Messages /> },
-      { path: "/communities", element: <Communities /> },
-      { path: "/profile", element: <Profile /> },
-    ],
+    basename: "/seafood-chat",
   },
-]);
+);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
