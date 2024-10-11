@@ -1,5 +1,6 @@
 import { GoComment, GoHeart } from "react-icons/go";
 import PropTypes from "prop-types";
+import {formatNumber} from "../utils/FormatNumber.js";
 
 const Post = ({ imageUrl, text, displayName, username, createdAt, likeCount, replyCount, avatarUrl }) => {
   const date = new Date(createdAt);
@@ -9,17 +10,6 @@ const Post = ({ imageUrl, text, displayName, username, createdAt, likeCount, rep
     month: 'short',  // "Oct"
     day: 'numeric',  // "4"
   });
-
-  const formatNumber = (number) => {
-    if (number >= 1_000_000_000) {
-      return (number / 1_000_000_000).toFixed(1) + 'B';
-    } else if (number >= 1_000_000) {
-      return (number / 1_000_000).toFixed(1) + 'M';
-    } else if (number >= 1_000) {
-      return (number / 1_000).toFixed(1) + 'K';
-    }
-    return number;
-  };
 
   return (
     <div className="px-2 flex border-b-[1px] border-blue-100/20 py-2">
