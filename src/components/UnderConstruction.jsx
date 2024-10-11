@@ -14,7 +14,7 @@ const UnderConstruction = () => {
   return (
     <Link to="/feed">
       <img
-        className={`${animations[Math.floor(Math.random() * animations.length)]} w-full mt-24`}
+        className={`${animations[Math.floor(Math.random() * animations.length)]} w-[80%] mx-auto mt-48`}
         // select random image
         src={images[Math.floor(Math.random() * images.length)]}
         alt=""
