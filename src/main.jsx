@@ -8,6 +8,7 @@ import Explore from "./pages/Explore.jsx";
 import Messages from "./pages/Messages.jsx";
 import Communities from "./pages/Communities.jsx";
 import Profile from "./pages/Profile.jsx";
+import CurrentPost from "./pages/CurrentPost.jsx";
 
 const router = createBrowserRouter(
   [
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
         { path: "/messages", element: <Messages /> },
         { path: "/communities", element: <Communities /> },
         { path: "/profile", element: <Profile /> },
+        { path: "/status/:id", element: <CurrentPost /> },
       ],
     },
   ],
