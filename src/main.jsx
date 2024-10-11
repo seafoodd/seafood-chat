@@ -21,7 +21,7 @@ const router = createBrowserRouter(
         { path: "/explore", element: <Explore /> },
         { path: "/messages", element: <Messages /> },
         { path: "/communities", element: <Communities /> },
-        { path: "/profile", element: <Profile /> },
+        { path: "/:username", element: <Profile /> },
         { path: "/status/:id", element: <CurrentPost /> },
       ],
     },

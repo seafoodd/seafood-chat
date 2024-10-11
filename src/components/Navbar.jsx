@@ -26,7 +26,7 @@ const Navbar = () => {
       <NavItem
         logo={<GoPerson size={28} />}
         text={"Profile"}
-        href={"profile"}
+        href={"/seafood"}
       />
     </div>
   );
