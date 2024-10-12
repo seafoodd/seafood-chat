@@ -27,7 +27,8 @@ const router = createBrowserRouter(
     },
   ],
   {
-    basename: "/seafood-chat",
+    basename: "/seafood-chat", // uncomment for github pages
+    // basename: "/", // uncomment for nginx
   },
 );
 

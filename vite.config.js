@@ -6,6 +6,14 @@ config()
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/seafood-chat/',
-  plugins: [react()],
+  base: '/seafood-chat/', // uncomment for github pages
+  // base: '/', // uncomment for nginx
+    plugins: [react()],
+  server: {
+    open: true,
+  },
+  build: {
+    outDir: "build",
+    sourcemap: true,
+  },
 })
