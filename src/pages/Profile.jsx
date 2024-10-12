@@ -5,7 +5,7 @@ const Profile = () => {
   const username = useParams().username;
   return (
     <>
-      <div className='font-bold text-[32px] mt-4'>{username}&apos;s profile!</div>
+      <div className='font-bold text-[32px] mt-4'>{username}&apos;s profile.</div>
       <UnderConstruction />
     </>
   );
