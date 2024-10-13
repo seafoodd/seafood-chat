@@ -4,7 +4,7 @@ import { PiShrimpFill } from "react-icons/pi";
 
 const Navbar = () => {
   return (
-    <div className="max-w-[565px] xl:pr-16 items-end xl:items-start flex-grow flex flex-col gap-2 px-2">
+    <div className="sticky left-0 top-0 max-w-[565px] h-[100vh] items-end xl:items-start flex-grow flex flex-1 flex-col gap-2 px-2">
       {/*TODO: Maybe add logos that are filled when the tab is active*/}
       <NavItem logo={<PiShrimpFill size={32} />} href={"feed"} />
       <NavItem logo={<GoHome size={28} />} text={"Feed"} href={"feed"} />
