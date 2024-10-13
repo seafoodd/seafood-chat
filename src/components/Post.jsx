@@ -67,7 +67,7 @@ const Post = ({
               <Link
                 to={`/${username}`}
                 onClick={handleLinkClick}
-                className="font-bold"
+                className="font-bold decoration-2 hover:underline"
               >
                 {displayName}
               </Link>
@@ -117,7 +117,7 @@ const Post = ({
   } else {
     return (
       <div
-        className={`px-2 flex border-b-[1px] border-blue-100/20 py-2 ${postId && "hover:cursor-pointer"}`}
+        className={`px-4 flex border-b-[1px] border-blue-100/20 py-2 ${postId && "hover:cursor-pointer"}`}
         onClick={handlePostClick}
       >
         <div className={`w-10 mr-2`}>
