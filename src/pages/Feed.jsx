@@ -2,35 +2,20 @@ import Post from "../components/Post.jsx";
 import {useEffect, useState} from "react";
 import PostForm from "../components/PostForm.jsx";
 import Loading from "../components/Loading.jsx";
+import { useGetPostsQuery } from "../app/services/postApi.js";
 
 const Feed = () => {
+  const { data: posts, error, isLoading, refetch } = useGetPostsQuery();
   const [activeSegment, setActiveSegment] = useState("forYou");
-  let [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    setPosts([]);
+    refetch();
+  }, [activeSegment, refetch]);
 
-    fetch(`${import.meta.env.VITE_API_URL}/api/posts`)
-      .then((response) => response.json())
-      .then(async (data) => {
-        const postsWithAuthors = await Promise.all(
-          data.map(async (post) => {
-            const user = await fetchAuthorDetails(post.authorId);
-            const { username, displayName, avatarUrl } = user;
-            return { ...post, username, displayName, avatarUrl };
-          }),
-        );
-        console.log(postsWithAuthors);
-        setPosts(postsWithAuthors);
-      });
-  }, [activeSegment]);
 
-  const fetchAuthorDetails = async (authorId) => {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/users/id/${authorId}`,
-    );
-    return await response.json();
-  };
+  if (isLoading) return <Loading />;
+  if (error) return <div>Error loading posts</div>;
+
 
   return (
     <div className="relative">
@@ -62,18 +47,18 @@ const Feed = () => {
       <PostForm />
       {posts.length > 0 ? (
         posts.map((post) => (
-            <Post
-              key={post.id}
-              postId={post.id}
-              text={post.text}
-              imageUrl={post.imageUrl}
-              displayName={post.displayName}
-              username={post.username}
-              createdAt={post.createdAt}
-              likeCount={post._count.likes}
-              replyCount={post._count.replies}
-              avatarUrl={post.avatarUrl}
-            />
+          <Post
+            key={post.id}
+            postId={post.id}
+            text={post.text}
+            imageUrl={post.imageUrl}
+            displayName={post.author.displayName}
+            username={post.author.username}
+            avatarUrl={post.author.avatarUrl}
+            createdAt={post.createdAt}
+            likeCount={post._count.likes}
+            replyCount={post._count.replies}
+          />
         ))
       ) : (
         <Loading />
