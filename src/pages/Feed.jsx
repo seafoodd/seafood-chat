@@ -1,5 +1,5 @@
 import Post from "../components/Post.jsx";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import PostForm from "../components/PostForm.jsx";
 import Loading from "../components/Loading.jsx";
 import { useGetPostsQuery } from "../app/services/postApi.js";
@@ -12,10 +12,8 @@ const Feed = () => {
     refetch();
   }, [activeSegment, refetch]);
 
-
   if (isLoading) return <Loading />;
   if (error) return <div>Error loading posts</div>;
-
 
   return (
     <div className="relative">
@@ -31,13 +29,14 @@ const Feed = () => {
                 activeSegment === segment ? "font-semibold" : "text-gray-500"
               }
             >
-              <div className={activeSegment === segment && "my-3"}>
+              <div className={activeSegment === segment ? "my-3" : undefined}>
                 {segment === "forYou" ? "For you" : "Following"}
               </div>
               <div
                 className={
-                  activeSegment === segment &&
-                  "border-color-1 border-b-4 rounded-full"
+                  activeSegment === segment
+                    ? "border-color-1 border-b-4 rounded-full"
+                    : undefined
                 }
               ></div>
             </h5>

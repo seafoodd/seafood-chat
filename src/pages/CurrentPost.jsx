@@ -74,7 +74,7 @@ const CurrentPost = () => {
       ) : (
         <Loading />
       )}
-      <PostForm isReply />
+      <PostForm replyId={postId} />
       {finishedLoading ? (
         replies.map((reply) => (
           <Post

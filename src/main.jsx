@@ -11,6 +11,7 @@ import Profile from "./pages/Profile.jsx";
 import CurrentPost from "./pages/CurrentPost.jsx";
 import { Provider } from "react-redux";
 import store from "./app/store.js";
+import Auth from "./pages/Auth.jsx";
 
 const router = createBrowserRouter(
   [
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
       element: <App />,
       children: [
         { path: "", element: <Feed /> },
+        { path: "/auth", element: <Auth /> },
         { path: "/feed", element: <Feed /> },
         { path: "/explore", element: <Explore /> },
         { path: "/messages", element: <Messages /> },

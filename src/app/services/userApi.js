@@ -18,7 +18,7 @@ export const userApi = api.injectEndpoints({
     }),
     current: builder.query({
       query: () => ({
-        url: "/current",
+        url: "/users/current",
         method: "GET",
       }),
     }),
