@@ -5,9 +5,9 @@ const Button = ({ text, onClick, className, type = "submit" }) => {
     <button
       onClick={onClick}
       type={type}
-      className={`${className} hover:cursor-pointer px-4 py-1.5 bg-color-1 rounded-full`}
+      className={`${className} hover:cursor-pointer transition-colors hover:bg-color-1/90 px-4 py-1.5 bg-color-1 rounded-full`}
     >
-      <h6 className="font-bold">{text}</h6>
+      <h6 className="font-bold text-[15px]">{text}</h6>
     </button>
   );
 };
