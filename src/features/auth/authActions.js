@@ -1,14 +1,14 @@
-import { createAsyncThunk } from '@reduxjs/toolkit'
-import {userApi} from '../../app/services/userApi'
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { userApi } from "../../app/services/userApi";
 
 export const fetchCurrentUser = createAsyncThunk(
-  'auth/fetchCurrentUser',
+  "auth/fetchCurrentUser",
   async (_, { getState, rejectWithValue }) => {
     const { auth } = getState();
     const token = auth.token;
 
     if (!token) {
-      return rejectWithValue('No token found');
+      return rejectWithValue("No token found");
     }
 
     try {
@@ -17,16 +17,17 @@ export const fetchCurrentUser = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 export const registerUser = createAsyncThunk(
-  'auth/register',
+  "auth/register",
   async ({ username, email, password }, { dispatch, rejectWithValue }) => {
     try {
-      const result = await dispatch(userApi.endpoints.register.initiate({ username, email, password }));
+      const result = await dispatch(
+        userApi.endpoints.register.initiate({ username, email, password }),
+      );
       const response = result.data;
-      console.log('API response:', response); // Log the entire response object
       return response;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -35,15 +36,17 @@ export const registerUser = createAsyncThunk(
         return rejectWithValue(error.message);
       }
     }
-  }
+  },
 );
 
 export const userLogin = createAsyncThunk(
-  'auth/login',
+  "auth/login",
   async ({ email, password }, { dispatch, rejectWithValue }) => {
     try {
-      const response = await dispatch(userApi.endpoints.login.initiate({ email, password }));
-      localStorage.setItem('token', response.token);
+      const response = await dispatch(
+        userApi.endpoints.login.initiate({ email, password }),
+      );
+      localStorage.setItem("token", response.data.token);
       return response.data;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -52,5 +55,5 @@ export const userLogin = createAsyncThunk(
         return rejectWithValue(error.message);
       }
     }
-  }
+  },
 );

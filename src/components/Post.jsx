@@ -37,7 +37,6 @@ const Post = ({
   const [currentIsLiked, setCurrentIsLiked] = useState(isLiked);
 
   useEffect(() => {
-    console.log(likeCount,isLiked)
     setCurrentLikeCount(likeCount);
     setCurrentIsLiked(isLiked);
   }, [postId, likeCount, isLiked]);
