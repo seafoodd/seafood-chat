@@ -5,12 +5,12 @@ import Navbar from "./components/Navbar.jsx";
 
 function App() {
   const location = useLocation();
-  const isAuth = location.pathname === "/auth";
+  const removeNavbar = location.pathname === "/auth";
 
   return (
     <>
       <Container>
-        {isAuth ? (
+        {removeNavbar ? (
           <div>
             <Outlet />
           </div>

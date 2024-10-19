@@ -61,6 +61,7 @@ const CurrentPost = () => {
       </div>
       {finishedLoading ? (
         <Post
+          postId={post.id}
           text={post.text}
           imageUrl={post.imageUrl}
           displayName={post.displayName}
@@ -69,6 +70,7 @@ const CurrentPost = () => {
           likeCount={post._count ? post._count.likes : 0}
           replyCount={post._count ? post._count.replies : 0}
           avatarUrl={post.avatarUrl}
+          isLiked={post.isLiked}
           isFull
         />
       ) : (
@@ -88,6 +90,7 @@ const CurrentPost = () => {
             likeCount={reply._count ? reply._count.likes : 0}
             replyCount={reply._count ? reply._count.replies : 0}
             avatarUrl={reply.avatarUrl}
+            isLiked={reply.isLiked}
           />
         ))
       ) : (

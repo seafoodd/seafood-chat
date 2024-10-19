@@ -12,6 +12,7 @@ import CurrentPost from "./pages/CurrentPost.jsx";
 import { Provider } from "react-redux";
 import store from "./app/store.js";
 import Auth from "./pages/Auth.jsx";
+import { fetchCurrentUser } from "./features/auth/authActions";
 
 const router = createBrowserRouter(
   [
@@ -35,6 +36,10 @@ const router = createBrowserRouter(
     // basename: "/", // uncomment for nginx
   },
 );
+
+if (store.getState().auth.token != null) {
+  store.dispatch(fetchCurrentUser());
+}
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

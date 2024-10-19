@@ -1,7 +1,6 @@
-import { GoComment, GoHeart } from "react-icons/go";
 import PropTypes from "prop-types";
-import { formatNumber } from "../utils/FormatNumber.js";
 import { Link, useNavigate } from "react-router-dom";
+import ActionPanel from "./ActionPanel.jsx";
 
 const Post = ({
   imageUrl,
@@ -14,9 +13,9 @@ const Post = ({
   avatarUrl,
   isFull,
   postId,
+  isLiked,
 }) => {
   const navigate = useNavigate();
-  const date = new Date(createdAt);
 
   // using this to prevent <Link> nesting
   const handlePostClick = () => {
@@ -29,6 +28,7 @@ const Post = ({
     e.stopPropagation();
   };
 
+  const date = new Date(createdAt);
   const formattedDate = isFull
     ? `${date.toLocaleString("en-US", {
         hour: "numeric",
@@ -100,18 +100,12 @@ const Post = ({
             dangerouslySetInnerHTML={{ __html: formattedDate }}
           ></h5>
         </div>
-        <div className="text-[13px] border-y-[1px] border-blue-100/20 ">
-          <div className="px-2 my-3 inline-flex text-gray-500 gap-16 w-full">
-            <div className="flex items-center gap-1">
-              <GoHeart size={20} />
-              {likeCount > 0 && <h6>{formatNumber(likeCount)}</h6>}
-            </div>
-            <div className="flex items-center gap-1">
-              <GoComment size={20} />
-              {replyCount > 0 && <h6>{formatNumber(replyCount)}</h6>}
-            </div>
-          </div>
-        </div>
+        <ActionPanel
+          initialIsLiked={isLiked}
+          postId={postId}
+          initialLikeCount={likeCount}
+          replyCount={replyCount}
+        />
       </div>
     );
   } else {
@@ -162,18 +156,13 @@ const Post = ({
               />
             </div>
           )}
-          <div className="text-[13px]">
-            <div className="mt-3 flex gap-16 text-gray-500">
-              <div className="flex items-center gap-1">
-                <GoHeart size={18} />
-                {likeCount > 0 && <h6>{formatNumber(likeCount)}</h6>}
-              </div>
-              <div className="flex items-center gap-1">
-                <GoComment size={18} />
-                {replyCount > 0 && <h6>{formatNumber(replyCount)}</h6>}
-              </div>
-            </div>
-          </div>
+          <ActionPanel
+            isSmall
+            initialIsLiked={isLiked}
+            postId={postId}
+            initialLikeCount={likeCount}
+            replyCount={replyCount}
+          />
         </div>
       </div>
     );
@@ -192,6 +181,7 @@ Post.propTypes = {
   avatarUrl: PropTypes.string,
   isFull: PropTypes.bool,
   postId: PropTypes.string,
+  isLiked: PropTypes.bool,
 };
 
 export default Post;

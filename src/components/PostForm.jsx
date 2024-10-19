@@ -4,14 +4,17 @@ import PropTypes from "prop-types";
 import { useCurrentQuery } from "../app/services/userApi.js";
 import Loading from "./Loading.jsx";
 import { useCreatePostMutation } from "../app/services/postApi.js";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const PostForm = ({ replyId }) => {
-  const { data: userData, error, isLoading } = useCurrentQuery();
+  const { isAuthenticated, userInfo, loading } = useSelector(
+    (state) => state.auth,
+  );
+  const { data: userData, error, isLoading } = isAuthenticated ? useCurrentQuery() : { data: null, error: null, isLoading: false };
   const [createPost] = useCreatePostMutation();
   const [postText, setPostText] = useState("");
   const [postImage, setPostImage] = useState(null);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -61,7 +64,7 @@ const PostForm = ({ replyId }) => {
             className="flex w-full items-center justify-between ml-2"
             onSubmit={handleSubmit}
           >
-            <div className='flex-col text-start'>
+            <div className="flex-col text-start">
               <input
                 type="text"
                 placeholder={
@@ -75,10 +78,13 @@ const PostForm = ({ replyId }) => {
                 type="file"
                 accept="image/*"
                 id="fileInput"
-                style={{display: "none"}}
+                style={{ display: "none" }}
                 onChange={(e) => setPostImage(e.target.files[0])}
               />
-              <label htmlFor="fileInput" className="cursor-pointer text-blue-500">
+              <label
+                htmlFor="fileInput"
+                className="cursor-pointer text-blue-500"
+              >
                 Choose an image
               </label>
             </div>
@@ -95,7 +101,7 @@ const PostForm = ({ replyId }) => {
 };
 
 PostForm.propTypes = {
-  replyId: PropTypes.number,
+  replyId: PropTypes.string,
 };
 
 export default PostForm;

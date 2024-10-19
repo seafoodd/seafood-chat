@@ -6,6 +6,8 @@ export default {
       colors: {
         color: {
           1: "#1d9bf0",
+          2: "#f91880",
+          3: "#00ba7c"
         },
       },
       fontFamily: {
