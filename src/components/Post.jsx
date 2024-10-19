@@ -77,7 +77,7 @@ const Post = ({
           {imageUrl && (
             <div className="mt-3">
               <img
-                className="max-h-[520px] max-w-[516px] rounded-2xl"
+                className="max-h-[1000px] w-full rounded-2xl border-[1px] border-blue-100/10"
                 src={`${import.meta.env.VITE_API_URL}${imageUrl}`}
                 alt=""
               />
@@ -129,7 +129,7 @@ const Post = ({
           {imageUrl && (
             <div className="mt-3">
               <img
-                className="max-h-[520px] max-w-[516px] rounded-2xl border-[1px] border-blue-100/10"
+                className="max-h-[520px] w-auto rounded-2xl border-[1px] border-blue-100/10"
                 src={`${import.meta.env.VITE_API_URL}${imageUrl}`}
                 alt=""
               />

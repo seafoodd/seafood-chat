@@ -4,12 +4,17 @@ import Post from "../components/Post.jsx";
 import { IoArrowBackOutline } from "react-icons/io5";
 import PostForm from "../components/PostForm.jsx";
 import Loading from "../components/Loading.jsx";
+import {useEffect} from "react";
 
 const CurrentPost = () => {
   const navigate = useNavigate();
   const { id: postId } = useParams();
+  const { data: post, error, isLoading, refetch } = useGetPostByIdQuery(postId);
 
-  const { data: post, error, isLoading } = useGetPostByIdQuery(postId);
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
 
   if (isLoading) return <Loading />;
   if (error || post.deleted) return <div>Error loading post</div>;
@@ -39,23 +44,29 @@ const CurrentPost = () => {
         isFull
         authorId={post.authorId}
       />
-      <PostForm replyId={postId} />
-      {post.replies.slice().reverse().map((reply) => (
-        <Post
-          key={reply.id}
-          postId={reply.id}
-          text={reply.text}
-          imageUrl={reply.imageUrl}
-          displayName={reply.author.displayName}
-          username={reply.author.username}
-          createdAt={reply.createdAt}
-          likeCount={reply._count ? reply._count.likes : 0}
-          replyCount={reply._count ? reply._count.replies : 0}
-          avatarUrl={reply.author.avatarUrl}
-          isLiked={reply.isLiked}
-          authorId={reply.authorId}
-        />
-      ))}
+      <PostForm replyId={postId} refetch={refetch}/>
+      {post.replies
+        .slice()
+        .reverse()
+        .map(
+          (reply) =>
+            (
+              <Post
+                key={reply.id}
+                postId={reply.id}
+                text={reply.text}
+                imageUrl={reply.imageUrl}
+                displayName={reply.author.displayName}
+                username={reply.author.username}
+                createdAt={reply.createdAt}
+                likeCount={reply._count ? reply._count.likes : 0}
+                replyCount={reply._count ? reply._count.replies : 0}
+                avatarUrl={reply.author.avatarUrl}
+                isLiked={reply.isLiked}
+                authorId={reply.authorId}
+              />
+            ),
+        )}
     </div>
   );
 };

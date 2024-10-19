@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { FaRegImage } from "react-icons/fa6";
 
-const PostForm = ({ replyId }) => {
+const PostForm = ({ replyId, refetch }) => {
   const { isAuthenticated, userInfo, loading } = useSelector(
     (state) => state.auth,
   );
@@ -47,6 +47,7 @@ const PostForm = ({ replyId }) => {
       console.log(post);
       setPostText("");
       setPostImage(null);
+      if (refetch) refetch();
     } catch (err) {
       console.error("Failed to create post: ", err);
     }
@@ -123,6 +124,8 @@ const PostForm = ({ replyId }) => {
 
 PostForm.propTypes = {
   replyId: PropTypes.string,
+  refetch: PropTypes.func,
+
 };
 
 export default PostForm;

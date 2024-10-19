@@ -22,7 +22,7 @@ const PostUpper = ({
   const [deletePost] = useDeletePostMutation();
 
   return (
-    <div className="flex justify-between mb-0.5">
+    <div className="flex justify-between -mb-0.5">
       <div className="flex">
         {!isCompact && (
           <div className={`w-10 mr-2`}>
@@ -49,7 +49,7 @@ const PostUpper = ({
           <Link
             to={`/${username}`}
             onClick={handleLinkClick}
-            className="text-gray-500 lowercase"
+            className="text-gray-500 lowercase font-normal"
           >
             @{username}
           </Link>

@@ -43,24 +43,27 @@ const Feed = () => {
           </button>
         ))}
       </div>
-      <PostForm />
+      <PostForm refetch={refetch} />
       {posts.length > 0 ? (
-        posts.slice().reverse().map((post) => (
-          <Post
-            key={post.id}
-            postId={post.id}
-            text={post.text}
-            imageUrl={post.imageUrl}
-            displayName={post.author.displayName}
-            username={post.author.username}
-            avatarUrl={post.author.avatarUrl}
-            createdAt={post.createdAt}
-            likeCount={post._count.likes}
-            replyCount={post._count.replies}
-            isLiked={post.isLiked}
-            authorId={post.authorId}
-          />
-        ))
+        posts
+          .slice()
+          .reverse()
+          .map((post) => (
+            <Post
+              key={post.id}
+              postId={post.id}
+              text={post.text}
+              imageUrl={post.imageUrl}
+              displayName={post.author.displayName}
+              username={post.author.username}
+              avatarUrl={post.author.avatarUrl}
+              createdAt={post.createdAt}
+              likeCount={post._count.likes}
+              replyCount={post._count.replies}
+              isLiked={post.isLiked}
+              authorId={post.authorId}
+            />
+          ))
       ) : (
         <Loading />
       )}
