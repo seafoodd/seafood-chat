@@ -56,12 +56,12 @@ function App() {
               <Button
                 text="Sign Up"
                 onClick={() => openModal(true)}
-                className="w-32 sm:w-56 md:w-auto font-bold text-white border-[1px] border-white/50"
+                className="w-32 sm:w-56 md:w-auto font-bold hover:bg-white/5 text-white border-[1px] border-white/50"
               />
               <Button
                 text="Log In"
                 onClick={() => openModal(false)}
-                className="w-32 sm:w-56 md:w-auto bg-white text-black font-bold border-[1px] border-white/50"
+                className="w-32 sm:w-56 md:w-auto bg-white hover:bg-white/90 text-black font-bold border-[1px] border-white/50"
               />
             </div>
           </div>

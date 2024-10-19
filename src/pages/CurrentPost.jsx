@@ -13,7 +13,6 @@ const CurrentPost = () => {
 
   useEffect(() => {
     refetch();
-    console.log(post)
   }, [refetch, postId]);
 
 

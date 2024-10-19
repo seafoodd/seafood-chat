@@ -141,9 +141,9 @@ const Post = ({
           )}
           <ActionPanel
             isSmall
-            initialIsLiked={isLiked}
+            initialIsLiked={currentIsLiked}
             postId={postId}
-            initialLikeCount={likeCount}
+            initialLikeCount={currentLikeCount}
             replyCount={replyCount}
           />
         </div>
