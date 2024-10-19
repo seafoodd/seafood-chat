@@ -48,7 +48,7 @@ const ActionPanel = ({
       className={`text-[13px] flex font-normal ${!isSmall && "border-y-[1px] border-blue-100/20"}`}
     >
       <div
-        className={`${isSmall ? "-mb-1" : "px-2"} my-1 flex text-gray-500 gap-6 w-full`}
+        className={`${isSmall ? "-mb-1" : "px-2"} my-1 flex text-gray-500 justify-between pr-[380px] w-full`}
       >
         <button
           onClick={handleLike}
@@ -63,7 +63,7 @@ const ActionPanel = ({
               <GoHeart strokeWidth={1} size={isSmall ? 18 : 20} />
             )}
           </div>
-          <span className="-ml-2 min-w-[64px] text-start">
+          <span className="-ml-2 text-start">
             {likeCount > 0 ? formatNumber(likeCount) : ""}
           </span>
         </button>
@@ -71,7 +71,7 @@ const ActionPanel = ({
           <div className="hover:bg-color-1/10 p-2.5 -ml-2.5 rounded-full">
             <GoComment strokeWidth={1} size={isSmall ? 18 : 20} />
           </div>
-          <span className="-ml-2 min-w-[20px] text-start">
+          <span className="-ml-2 text-start">
             {replyCount > 0 ? formatNumber(replyCount) : ""}
           </span>
         </div>

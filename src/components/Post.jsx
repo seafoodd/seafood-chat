@@ -122,7 +122,7 @@ const Post = ({
             />
           </Link>
         </div>
-        <div className="text-[15px]">
+        <div className="text-[15px] w-full">
           <div className="flex mb-0.5">
             <Link
               to={`/${username}`}
@@ -149,7 +149,7 @@ const Post = ({
           {imageUrl && (
             <div className="mt-3">
               <img
-                className="max-h-[520px] max-w-[516px] rounded-2xl"
+                className="max-h-[520px] max-w-[516px] rounded-2xl border-[1px] border-blue-100/10"
                 src={`${import.meta.env.VITE_API_URL}${imageUrl}`}
                 alt=""
               />
