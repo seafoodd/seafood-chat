@@ -5,20 +5,11 @@ import { useCurrentQuery } from "../app/services/userApi.js";
 import Loading from "./Loading.jsx";
 import { useCreatePostMutation } from "../app/services/postApi.js";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { FaRegImage } from "react-icons/fa6";
 
 const PostForm = ({ replyId, refetch }) => {
-  const { isAuthenticated, userInfo, loading } = useSelector(
-    (state) => state.auth,
-  );
-  const {
-    data: userData,
-    error,
-    isLoading,
-  } = isAuthenticated
-    ? useCurrentQuery()
-    : { data: null, error: null, isLoading: false };
+  const { data: userData, error, isLoading } = useCurrentQuery();
+
   const [createPost] = useCreatePostMutation();
   const [postText, setPostText] = useState("");
   const [postImage, setPostImage] = useState(null);
@@ -45,7 +36,7 @@ const PostForm = ({ replyId, refetch }) => {
     }
 
     try {
-      const post = await createPost(formData).unwrap();
+      await createPost(formData).unwrap();
       setPostText("");
       setPostImage(null);
       if (refetch) refetch();
@@ -126,7 +117,6 @@ const PostForm = ({ replyId, refetch }) => {
 PostForm.propTypes = {
   replyId: PropTypes.string,
   refetch: PropTypes.func,
-
 };
 
 export default PostForm;

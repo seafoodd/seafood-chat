@@ -10,7 +10,8 @@ export default {
         color: {
           1: "#1d9bf0",
           2: "#f91880",
-          3: "#00ba7c"
+          3: "#00ba7c",
+          4: "#5b7083",
         },
       },
       fontFamily: {

@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import ActionPanel from "./ActionPanel.jsx";
 import PostUpper from "./PostUpper.jsx";
 import { useCurrentQuery } from "../app/services/userApi.js";
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 const Post = ({
@@ -21,16 +20,12 @@ const Post = ({
   authorId,
 }) => {
   const navigate = useNavigate();
-  const { isAuthenticated, userInfo, loading } = useSelector(
-    (state) => state.auth,
-  );
   const {
     data: userData,
     error,
     isLoading,
-  } = isAuthenticated
-    ? useCurrentQuery()
-    : { data: null, error: null, isLoading: false };
+  } = useCurrentQuery()
+
   const isOwner = userData ? authorId === userData.id : false;
 
   const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);

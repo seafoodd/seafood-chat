@@ -13,6 +13,7 @@ import { Provider } from "react-redux";
 import store from "./app/store.js";
 import Auth from "./pages/Auth.jsx";
 import { fetchCurrentUser } from "./features/auth/authActions";
+import {ErrorBoundary} from "react-error-boundary";
 
 const router = createBrowserRouter(
   [
@@ -44,7 +45,9 @@ if (store.getState().auth.token != null) {
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <ErrorBoundary fallback={<div>Something went wrong</div>}>
+        <RouterProvider router={router} />
+      </ErrorBoundary>
     </Provider>
   </StrictMode>,
 );
