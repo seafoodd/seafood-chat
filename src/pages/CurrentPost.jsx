@@ -13,7 +13,8 @@ const CurrentPost = () => {
 
   useEffect(() => {
     refetch();
-  }, [refetch]);
+    console.log(post)
+  }, [refetch, postId]);
 
 
   if (isLoading) return <Loading />;
@@ -43,6 +44,7 @@ const CurrentPost = () => {
         isLiked={post.isLiked}
         isFull
         authorId={post.authorId}
+        refetch={refetch}
       />
       <PostForm replyId={postId} refetch={refetch}/>
       {post.replies

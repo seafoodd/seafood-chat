@@ -4,6 +4,7 @@ import ActionPanel from "./ActionPanel.jsx";
 import PostUpper from "./PostUpper.jsx";
 import { useCurrentQuery } from "../app/services/userApi.js";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const Post = ({
   imageUrl,
@@ -31,6 +32,15 @@ const Post = ({
     ? useCurrentQuery()
     : { data: null, error: null, isLoading: false };
   const isOwner = userData ? authorId === userData.id : false;
+
+  const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
+  const [currentIsLiked, setCurrentIsLiked] = useState(isLiked);
+
+  useEffect(() => {
+    console.log(likeCount,isLiked)
+    setCurrentLikeCount(likeCount);
+    setCurrentIsLiked(isLiked);
+  }, [postId, likeCount, isLiked]);
 
   // using this to prevent <Link> nesting
   const handlePostClick = () => {
@@ -89,9 +99,9 @@ const Post = ({
           ></h5>
         </div>
         <ActionPanel
-          initialIsLiked={isLiked}
+          initialIsLiked={currentIsLiked}
           postId={postId}
-          initialLikeCount={likeCount}
+          initialLikeCount={currentLikeCount}
           replyCount={replyCount}
         />
       </div>

@@ -1,6 +1,6 @@
 import { GoComment, GoHeart, GoHeartFill } from "react-icons/go";
 import { formatNumber } from "../utils/FormatNumber.js";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   useLikePostMutation,
   useUnlikePostMutation,
@@ -22,6 +22,12 @@ const ActionPanel = ({
   const { isAuthenticated, userInfo, loading } = useSelector(
     (state) => state.auth,
   );
+
+  useEffect(() => {
+    setLikeCount(initialLikeCount);
+    setIsLiked(initialIsLiked);
+  }, [postId, initialLikeCount, initialIsLiked]);
+
   const handleLike = async (e) => {
     e.stopPropagation();
     if (!isAuthenticated) {

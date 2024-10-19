@@ -22,6 +22,12 @@ const PostForm = ({ replyId, refetch }) => {
   const [createPost] = useCreatePostMutation();
   const [postText, setPostText] = useState("");
   const [postImage, setPostImage] = useState(null);
+
+  useEffect(() => {
+    setPostText("");
+    setPostImage(null);
+  }, [replyId]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -38,13 +44,8 @@ const PostForm = ({ replyId, refetch }) => {
       formData.append("image", postImage);
     }
 
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
-    }
-
     try {
       const post = await createPost(formData).unwrap();
-      console.log(post);
       setPostText("");
       setPostImage(null);
       if (refetch) refetch();
