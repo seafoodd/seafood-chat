@@ -1,52 +1,18 @@
-import {useNavigate, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetPostByIdQuery } from "../app/services/postApi.js";
 import Post from "../components/Post.jsx";
-import {IoArrowBackOutline} from "react-icons/io5";
+import { IoArrowBackOutline } from "react-icons/io5";
 import PostForm from "../components/PostForm.jsx";
 import Loading from "../components/Loading.jsx";
 
 const CurrentPost = () => {
   const navigate = useNavigate();
-  const postId = useParams().id;
+  const { id: postId } = useParams();
 
-  const [post, setPost] = useState({});
-  const [finishedLoading, setFinishedLoading] = useState(false);
-  const [replies, setReplies] = useState([]);
+  const { data: post, error, isLoading } = useGetPostByIdQuery(postId);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await fetchPostAndReplies();
-      setFinishedLoading(true);
-    };
-    fetchData();
-  }, [postId]);
-
-  const fetchPostAndReplies = async () => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/posts/${postId}`)
-      .then((response) => response.json())
-      .then(async (data) => {
-        const user = await fetchAuthorDetails(data.authorId);
-        const { username, displayName, avatarUrl } = user;
-        const postWithAuthor = { ...data, username, displayName, avatarUrl };
-        setPost(postWithAuthor);
-        const repliesWithAuthors = await Promise.all(
-          data.replies.map(async (reply) => {
-            const replyUser = await fetchAuthorDetails(reply.authorId);
-            const { username, displayName, avatarUrl } = replyUser;
-            return { ...reply, username, displayName, avatarUrl };
-          }),
-        );
-
-        setReplies(repliesWithAuthors);
-      });
-  };
-
-  const fetchAuthorDetails = async (authorId) => {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/users/id/${authorId}`,
-    );
-    return await response.json();
-  };
+  if (isLoading) return <Loading />;
+  if (error || post.deleted) return <div>Error loading post</div>;
 
   return (
     <div>
@@ -59,43 +25,37 @@ const CurrentPost = () => {
         </button>
         <h2 className="text-[20px] font-bold ml-8">Post</h2>
       </div>
-      {finishedLoading ? (
-        <Post
-          postId={post.id}
-          text={post.text}
-          imageUrl={post.imageUrl}
-          displayName={post.displayName}
-          username={post.username}
-          createdAt={post.createdAt}
-          likeCount={post._count ? post._count.likes : 0}
-          replyCount={post._count ? post._count.replies : 0}
-          avatarUrl={post.avatarUrl}
-          isLiked={post.isLiked}
-          isFull
-        />
-      ) : (
-        <Loading />
-      )}
+      <Post
+        postId={post.id}
+        text={post.text}
+        imageUrl={post.imageUrl}
+        displayName={post.author.displayName}
+        username={post.author.username}
+        createdAt={post.createdAt}
+        likeCount={post._count ? post._count.likes : 0}
+        replyCount={post._count ? post._count.replies : 0}
+        avatarUrl={post.author.avatarUrl}
+        isLiked={post.isLiked}
+        isFull
+        authorId={post.authorId}
+      />
       <PostForm replyId={postId} />
-      {finishedLoading ? (
-        replies.slice().reverse().map((reply) => (
-          <Post
-            key={reply.id}
-            postId={reply.id}
-            text={reply.text}
-            imageUrl={reply.imageUrl}
-            displayName={reply.displayName}
-            username={reply.username}
-            createdAt={reply.createdAt}
-            likeCount={reply._count ? reply._count.likes : 0}
-            replyCount={reply._count ? reply._count.replies : 0}
-            avatarUrl={reply.avatarUrl}
-            isLiked={reply.isLiked}
-          />
-        ))
-      ) : (
-        <Loading />
-      )}
+      {post.replies.slice().reverse().map((reply) => (
+        <Post
+          key={reply.id}
+          postId={reply.id}
+          text={reply.text}
+          imageUrl={reply.imageUrl}
+          displayName={reply.author.displayName}
+          username={reply.author.username}
+          createdAt={reply.createdAt}
+          likeCount={reply._count ? reply._count.likes : 0}
+          replyCount={reply._count ? reply._count.replies : 0}
+          avatarUrl={reply.author.avatarUrl}
+          isLiked={reply.isLiked}
+          authorId={reply.authorId}
+        />
+      ))}
     </div>
   );
 };

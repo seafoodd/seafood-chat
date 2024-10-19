@@ -58,6 +58,7 @@ const Feed = () => {
             likeCount={post._count.likes}
             replyCount={post._count.replies}
             isLiked={post.isLiked}
+            authorId={post.authorId}
           />
         ))
       ) : (

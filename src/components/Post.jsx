@@ -1,6 +1,9 @@
 import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
 import ActionPanel from "./ActionPanel.jsx";
+import PostUpper from "./PostUpper.jsx";
+import { useCurrentQuery } from "../app/services/userApi.js";
+import { useSelector } from "react-redux";
 
 const Post = ({
   imageUrl,
@@ -14,8 +17,20 @@ const Post = ({
   isFull,
   postId,
   isLiked,
+  authorId,
 }) => {
   const navigate = useNavigate();
+  const { isAuthenticated, userInfo, loading } = useSelector(
+    (state) => state.auth,
+  );
+  const {
+    data: userData,
+    error,
+    isLoading,
+  } = isAuthenticated
+    ? useCurrentQuery()
+    : { data: null, error: null, isLoading: false };
+  const isOwner = userData ? authorId === userData.id : false;
 
   // using this to prevent <Link> nesting
   const handlePostClick = () => {
@@ -46,44 +61,18 @@ const Post = ({
 
   if (isFull) {
     return (
-      <div
-        className={`px-4 py-2`}
-      >
+      <div className={`px-4 py-2`}>
         <div className="text-[15px] ">
-          <div className="flex mb-0.5 ">
-            <div className={`w-10 mr-2`}>
-              <Link to={`/${username}`} onClick={handleLinkClick}>
-                <img
-                  className="w-10 h-10 rounded-full"
-                  src={`${import.meta.env.VITE_API_URL}${avatarUrl}`}
-                  alt="avatar"
-                />
-              </Link>
-            </div>
-            <div
-              className={`flex flex-col items-start leading-snug justify-center`}
-            >
-              <Link
-                to={`/${username}`}
-                onClick={handleLinkClick}
-                className="font-bold decoration-2 hover:underline"
-              >
-                {displayName}
-              </Link>
-              <Link
-                to={`/${username}`}
-                onClick={handleLinkClick}
-                className="text-gray-500 lowercase"
-              >
-                @{username}
-              </Link>
-            </div>
-          </div>
+          <PostUpper
+            displayName={displayName}
+            username={username}
+            isOwner={isOwner}
+            avatarUrl={avatarUrl}
+            postId={postId}
+          />
 
           {text && (
-            <h6 className="text-start mt-3 text-[17px] break-words">
-              {text}
-            </h6>
+            <h6 className="text-start mt-3 text-[17px] break-words">{text}</h6>
           )}
           {imageUrl && (
             <div className="mt-3">
@@ -113,7 +102,7 @@ const Post = ({
         className={`px-4 flex border-b-[1px] border-blue-100/20 py-2 ${postId && "hover:cursor-pointer"}`}
         onClick={handlePostClick}
       >
-        <div className={`w-10 mr-2`}>
+        <div className={`w-10 mr-2 flex-none`}>
           <Link to={`/${username}`} onClick={handleLinkClick}>
             <img
               className="w-10 h-10 rounded-full mt-1 transition-opacity hover:opacity-90"
@@ -123,28 +112,19 @@ const Post = ({
           </Link>
         </div>
         <div className="text-[15px] w-full">
-          <div className="flex mb-0.5">
-            <Link
-              to={`/${username}`}
-              onClick={handleLinkClick}
-              className="font-bold decoration-2 hover:underline"
-            >
-              {displayName}
-            </Link>
-            &nbsp;
-            <Link
-              to={`/${username}`}
-              onClick={handleLinkClick}
-              className="text-gray-500 lowercase"
-            >
-              @{username}
-            </Link>
-            <div className="mx-1 text-gray-500 font-bold">&middot;</div>
-            <h5 className="text-gray-500 hover:underline hover:cursor-pointer">{formattedDate}</h5>
-          </div>
+          <PostUpper
+            displayName={displayName}
+            username={username}
+            isOwner={isOwner}
+            postId={postId}
+            formattedDate={formattedDate}
+            isCompact
+          />
 
           {text && (
-            <h6 className="text-start max-w-[516px] leading-snug break-words">{text}</h6>
+            <h6 className="text-start max-w-[516px] leading-snug break-words">
+              {text}
+            </h6>
           )}
           {imageUrl && (
             <div className="mt-3">
@@ -181,6 +161,7 @@ Post.propTypes = {
   isFull: PropTypes.bool,
   postId: PropTypes.string,
   isLiked: PropTypes.bool,
+  authorId: PropTypes.string,
 };
 
 export default Post;
