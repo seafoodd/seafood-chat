@@ -50,10 +50,10 @@ const CurrentPost = () => {
 
   return (
     <div>
-      <div className="px-4 flex h-[53px] items-center -ml-2">
+      <div className="px-4 w-full bg-black/50 backdrop-blur-2xl sticky top-0 left-0 flex h-[53px] items-center">
         <button
           onClick={() => navigate(-1)}
-          className="hover:bg-white/10 transition-colors p-2 rounded-full"
+          className="hover:bg-white/10 transition-colors p-2 rounded-full -ml-2"
         >
           <IoArrowBackOutline size={20} />
         </button>
@@ -78,7 +78,7 @@ const CurrentPost = () => {
       )}
       <PostForm replyId={postId} />
       {finishedLoading ? (
-        replies.map((reply) => (
+        replies.slice().reverse().map((reply) => (
           <Post
             key={reply.id}
             postId={reply.id}

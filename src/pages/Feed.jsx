@@ -17,7 +17,7 @@ const Feed = () => {
 
   return (
     <div className="relative">
-      <div className="w-full bg-black/80 backdrop-blur-2xl top-0 left-0 h-[53px] border-b-[1px] sticky border-blue-100/20 flex">
+      <div className="w-full bg-black/50 backdrop-blur-2xl top-0 left-0 h-[53px] border-b-[1px] sticky border-blue-100/20 flex">
         {["forYou", "following"].map((segment) => (
           <button
             key={segment}
@@ -45,7 +45,7 @@ const Feed = () => {
       </div>
       <PostForm />
       {posts.length > 0 ? (
-        posts.map((post) => (
+        posts.slice().reverse().map((post) => (
           <Post
             key={post.id}
             postId={post.id}

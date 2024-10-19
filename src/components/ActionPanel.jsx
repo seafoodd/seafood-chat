@@ -25,7 +25,7 @@ const ActionPanel = ({
   const handleLike = async (e) => {
     e.stopPropagation();
     if (!isAuthenticated) {
-      console.log("Non-authenticated like attempt") // TODO: add modal window for registration
+      console.log("Non-authenticated like attempt"); // TODO: add modal window for registration
       return;
     }
     try {
@@ -48,14 +48,12 @@ const ActionPanel = ({
       className={`text-[13px] flex font-normal ${!isSmall && "border-y-[1px] border-blue-100/20"}`}
     >
       <div
-        className={`${isSmall ? "-mb-1" : "px-2"} my-1 flex text-gray-500 gap-16 w-full`}
+        className={`${isSmall ? "-mb-1" : "px-2"} my-1 flex text-gray-500 gap-6 w-full`}
       >
         <button
           onClick={handleLike}
           className={`flex items-center gap-1 transition-colors ${
-            isLiked
-              ? "text-color-2 fill-color-2"
-              : "hover:text-color-2 hover:fill-color-2"
+            isLiked ? "text-color-2" : "hover:text-color-2"
           }`}
         >
           <div className="hover:bg-color-2/10 -ml-2.5 rounded-full p-2.5 transition-colors">
@@ -65,13 +63,17 @@ const ActionPanel = ({
               <GoHeart strokeWidth={1} size={isSmall ? 18 : 20} />
             )}
           </div>
-          {likeCount > 0 && (
-            <h6 className="-ml-2">{formatNumber(likeCount)}</h6>
-          )}
+          <span className="-ml-2 min-w-[64px] text-start">
+            {likeCount > 0 ? formatNumber(likeCount) : ""}
+          </span>
         </button>
-        <div className="flex items-center gap-1 transition-colors hover:text-color-1 hover:fill-color-1">
-          <GoComment strokeWidth={1} size={isSmall ? 18 : 20} />
-          {replyCount > 0 && <h6>{formatNumber(replyCount)}</h6>}
+        <div className="flex items-center gap-1 transition-colors hover:text-color-1">
+          <div className="hover:bg-color-1/10 p-2.5 -ml-2.5 rounded-full">
+            <GoComment strokeWidth={1} size={isSmall ? 18 : 20} />
+          </div>
+          <span className="-ml-2 min-w-[20px] text-start">
+            {replyCount > 0 ? formatNumber(replyCount) : ""}
+          </span>
         </div>
       </div>
     </div>

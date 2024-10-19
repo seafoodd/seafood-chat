@@ -47,8 +47,7 @@ const Post = ({
   if (isFull) {
     return (
       <div
-        className={`px-4 py-2 ${postId && "hover:cursor-pointer"}`}
-        onClick={handlePostClick}
+        className={`px-4 py-2`}
       >
         <div className="text-[15px] ">
           <div className="flex mb-0.5 ">
@@ -82,7 +81,7 @@ const Post = ({
           </div>
 
           {text && (
-            <h6 className="text-start max-w-[516px] mt-3 text-[17px]">
+            <h6 className="text-start mt-3 text-[17px] break-words">
               {text}
             </h6>
           )}
@@ -96,7 +95,7 @@ const Post = ({
             </div>
           )}
           <h5
-            className="text-gray-500 my-4 text-start hover:underline"
+            className="text-gray-500 my-4 text-start hover:underline hover:cursor-pointer"
             dangerouslySetInnerHTML={{ __html: formattedDate }}
           ></h5>
         </div>
@@ -141,11 +140,11 @@ const Post = ({
               @{username}
             </Link>
             <div className="mx-1 text-gray-500 font-bold">&middot;</div>
-            <h5 className="text-gray-500 hover:underline">{formattedDate}</h5>
+            <h5 className="text-gray-500 hover:underline hover:cursor-pointer">{formattedDate}</h5>
           </div>
 
           {text && (
-            <h6 className="text-start max-w-[516px] leading-snug">{text}</h6>
+            <h6 className="text-start max-w-[516px] leading-snug break-words">{text}</h6>
           )}
           {imageUrl && (
             <div className="mt-3">
